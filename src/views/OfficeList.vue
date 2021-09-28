@@ -2,29 +2,21 @@
   <div class="offices-wrapper">
     <p class="headline">All Offices</p>
     <div class="office__card" v-for="office in offices" :key="office.id">
-      <specno-card-wrapper :color="office.color">
-        <template>
-          <Office :office="office" />
-        </template>
-      </specno-card-wrapper>
+      <SpecnoOfficeCard :office="office" />
     </div>
-    <v-fab-transition>
-      <v-btn color="#0D4477" large dark fixed bottom right fab>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-fab-transition>
+    <AddNew />
   </div>
 </template>
 
 <script>
-import SpecnoCardWrapper from "@/components/SpecnoCardWrapper";
-import Office from "@/components/Office";
+import SpecnoOfficeCard from "../components/SpecnoOfficeCard";
+import AddNew from "../components/AddNew";
 
 import OfficeDataService from "@/services/OfficeDataService";
 export default {
   components: {
-    SpecnoCardWrapper,
-    Office,
+    SpecnoOfficeCard,
+    AddNew,
   },
   data() {
     return {

@@ -1,8 +1,10 @@
 <template>
   <v-card-text>
     <v-row>
-      <v-col>
-        <v-icon class="mr-2">{{ icon }}</v-icon>
+      <v-col cols="1" class="mr-2">
+        <v-icon>{{ icon }}</v-icon>
+      </v-col>
+      <v-col cols="10">
         <slot name="additionalText"></slot>&nbsp;<span class="text-caption">{{
           text
         }}</span>
