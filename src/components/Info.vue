@@ -2,7 +2,7 @@
   <v-card-text>
     <v-row>
       <v-col>
-        <v-icon class="mr-1">{{ icon }}</v-icon>
+        <v-icon class="mr-2">{{ icon }}</v-icon>
         <slot name="additionalText"></slot>&nbsp;<span class="text-caption">{{
           text
         }}</span>

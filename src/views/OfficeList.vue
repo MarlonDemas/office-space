@@ -1,11 +1,18 @@
 <template>
   <div class="offices-wrapper">
     <p class="headline">All Offices</p>
-    <specno-card-wrapper color="#333666">
-      <template>
-        <Office :offices="offices" />
-      </template>
-    </specno-card-wrapper>
+    <div class="office__card" v-for="office in offices" :key="office.id">
+      <specno-card-wrapper :color="office.color">
+        <template>
+          <Office :office="office" />
+        </template>
+      </specno-card-wrapper>
+    </div>
+    <v-fab-transition>
+      <v-btn color="#0D4477" large dark fixed bottom right fab>
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </div>
 </template>
 
@@ -14,7 +21,6 @@ import SpecnoCardWrapper from "@/components/SpecnoCardWrapper";
 import Office from "@/components/Office";
 
 import OfficeDataService from "@/services/OfficeDataService";
-import StaffDataService from "@/services/StaffDataService";
 export default {
   components: {
     SpecnoCardWrapper,
@@ -33,16 +39,6 @@ export default {
       OfficeDataService.getAll()
         .then((response) => {
           this.offices = response.data;
-          this.offices.forEach((office) => {
-            StaffDataService.getAll(office.id)
-              .then((response) => {
-                office.staffCount = response.data.count;
-              })
-              .catch((e) => {
-                console.error(e);
-              });
-          });
-          console.log(this.offices);
         })
         .catch((e) => {
           console.error(e);
@@ -51,3 +47,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.office__btn {
+  bottom: 17px;
+}
+</style>

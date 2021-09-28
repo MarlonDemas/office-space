@@ -10,3 +10,11 @@ $font-weights: (
     font-size: 1.75rem !important;
     font-weight: 600 !important;
 }
+
+.v-btn--fab.v-size--large.v-btn--absolute.v-btn--bottom {
+    bottom: 24px !important;
+}
+
+.theme--light.v-application {
+    background-color: #E5E5E5 !important;
+}

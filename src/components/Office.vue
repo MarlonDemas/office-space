@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" v-for="office in offices" :key="office.id">
+    <v-card class="mx-auto">
       <v-card-title class="text-h5 font-weight-bolder">
         {{ office.name }}
         <v-spacer></v-spacer>
@@ -9,10 +9,10 @@
 
       <info
         icon="mdi-account-group-outline"
-        :text="`Staff Member${office.staffCount > 1 ? 's' : ''} in Office`"
+        :text="`Staff Member${office.staffs.length > 1 ? 's' : ''} in Office`"
       >
         <template slot="additionalText">
-          <span class="font-weight-bold">{{ office.staffCount }}</span>
+          <span class="font-weight-bold">{{ office.staffs.length }}</span>
         </template>
         <template slot="belowInfo">
           <v-row>
@@ -55,8 +55,8 @@
 import Info from "./Info";
 export default {
   props: {
-    offices: {
-      type: Array,
+    office: {
+      type: Object,
       required: true,
     },
   },

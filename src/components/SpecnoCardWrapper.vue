@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" :style="coloredBorder">
+  <v-card class="mx-auto mb-3" :style="coloredBorder">
     <slot></slot>
   </v-card>
 </template>
