@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import OfficeList from '@/views/OfficeList';
+import Office from '@/views/Office';
 import NewOffice from '@/views/NewOffice';
 import EditOffice from '@/views/EditOffice';
 
@@ -14,6 +15,11 @@ export default new Router({
             alias: "/offices",
             name: "offices",
             component: OfficeList
+        },
+        {
+            path: "/offices/:id",
+            name: "office-detail",
+            component: Office
         },
         {
             path: "/offices/new",
