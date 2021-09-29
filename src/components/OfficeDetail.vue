@@ -4,7 +4,13 @@
       <v-card-title class="text-h5 font-weight-bolder">
         {{ office.name }}
         <v-spacer></v-spacer>
-        <v-icon color="#0d4477">mdi-pencil-outline</v-icon>
+        <v-icon
+          @click="
+            $router.push({ name: 'edit-office', params: { id: office.id } })
+          "
+          color="#0d4477"
+          >mdi-pencil-outline</v-icon
+        >
       </v-card-title>
 
       <info
