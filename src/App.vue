@@ -10,6 +10,6 @@
 
 <style>
 .container {
-  max-width: 350px;
+  max-width: 350px !important;
 }
 </style>
