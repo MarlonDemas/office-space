@@ -9,14 +9,15 @@
         <p class="text-h5 font-weight-medium">
             Office Colour
         </p>
-        <v-swatches v-model="office.color" inline background-color="#E5E5E5" shapes="circles" row-length="6" swatch-size="36" spacing-size="18" :swatches="swatches" :wrapper-style="{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}"></v-swatches>
+        <v-swatches v-model="office.color" inline background-color="#E5E5E5" shapes="circles" row-length="6" swatch-size="36" :spacing-size="18" :swatches="swatches" :wrapper-style="{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}"></v-swatches>
         <div class="text-center mt-5">
             <v-btn
+                :loading="loading"
                 rounded
                 color="#489DDA"
                 dark
                 class="px-10"
-                @click="addOffice"
+                @click="addOffice()"
             >
                 Add Office
             </v-btn>
@@ -51,17 +52,21 @@ export default {
                 "#0072E8",
                 "#8338EC"
             ],
+            loading: false,
         }
     },
     methods: {
         addOffice() {
+            this.loading = true;
             OfficeDataService.create(this.office)
             .then(() => {
                 this.$router.push({name: "offices"});
             })
             .catch((e) => {
                 console.error(e);
-            })
+            }).finally(() => {
+                this.loading = false;
+            });
         }
     }
 }
