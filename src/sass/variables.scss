@@ -3,7 +3,14 @@
 $body-font-family: 'Inter';
 
 $font-weights: (
+    'medium': 600,
     'bolder': 800
+);
+
+$headings: (
+    'h6': (
+        'size': 1.125rem
+    )
 );
 
 .headline {

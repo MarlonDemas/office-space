@@ -2,7 +2,14 @@
   <div>
     <v-card class="mx-auto">
       <v-card-title class="text-h5 font-weight-bolder">
-        {{ office.name }}
+        <span
+        :class="{'clickable': clickable}"
+          @click="clickable ?
+            $router.push({ name: 'office-details', params: { id: office.id } }) : ''
+          "
+        >
+          {{ office.name }}
+        </span>
         <v-spacer></v-spacer>
         <v-icon
           @click="
@@ -65,6 +72,10 @@ export default {
       type: Object,
       required: true,
     },
+    clickable: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     Info,
@@ -76,3 +87,9 @@ export default {
   },
 };
 </script>
+
+<style >
+.clickable {
+  cursor: pointer;
+}
+</style>

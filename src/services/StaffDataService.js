@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class OfficeDataService {
+class StaffDataService {
     getAll(officeId) {
         return http.get(`/staff/${officeId}`);
     }
@@ -22,4 +22,4 @@ class OfficeDataService {
     }
 }
 
-export default new OfficeDataService();
+export default new StaffDataService();

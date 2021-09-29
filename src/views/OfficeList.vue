@@ -2,7 +2,7 @@
   <div class="offices__wrapper">
     <p class="headline">All Offices</p>
     <div class="office__card" v-for="office in offices" :key="office.id">
-      <SpecnoOfficeCard :office="office" @click="$router.push({name: 'office-details', params: {id: office.id}})" />
+      <SpecnoOfficeCard :office="office" clickable />
     </div>
     <AddNew @add-new="$router.push({name: 'new-office'})" />
   </div>
