@@ -18,7 +18,7 @@ export default new Router({
         },
         {
             path: "/offices/:id",
-            name: "office-detail",
+            name: "office-details",
             component: Office
         },
         {
