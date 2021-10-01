@@ -50,6 +50,16 @@ https://offices.marlondemas.co.za
 | Vuetify |CSS (SASS) | Terminal
 | Axios | | Github
 
+## Roadmap
+
+### Todo
+
+- [ ] UI/UX Improvements
+    - [ ] Responsive Design
+    - [ ] Frontend Validation (Protection against junk data)
+    - [ ] Alerts (Error and success messages)
+    - [ ] Loaders (When button is clicked visual confirmation that something is happening to prevent spamming)
+
 ## Authors
 
 * **Marlon Demas** - (https://github.com/MarlonDemas)
