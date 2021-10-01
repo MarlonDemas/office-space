@@ -8,6 +8,7 @@
       flat
       solo
       append-icon="mdi-magnify"
+      v-model="searchQuery"
     ></v-text-field>
     <div class="d-flex">
       <p class="text-h5 font-weight-medium">Staff Members in Office</p>
@@ -16,7 +17,7 @@
         {{ office.staffs.length }}
       </p>
     </div>
-    <v-row align="center" v-for="staff in office.staffs" :key="staff.id">
+    <v-row align="center" v-for="staff in filteredStaff" :key="staff.id">
       <v-col cols="3">
         <v-avatar size="52">
           <img :src="require(`@/assets/avatars/${staff.avatar}`)" />
@@ -116,8 +117,21 @@ export default {
     AddEditStaffDialog,
     SpecnoButton,
   },
+  computed: {
+    filteredStaff() {
+      if (this.searchQuery != "" && this.searchQuery) {
+        return this.office.staffs.filter((staff) => {
+          return this.fullName(staff)
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase());
+        });
+      }
+      return this.office.staffs;
+    },
+  },
   data() {
     return {
+      searchQuery: "",
       office: {
         staffs: [],
       },
