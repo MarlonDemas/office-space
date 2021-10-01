@@ -27,12 +27,7 @@
       </v-col>
       <v-icon @click="editMember(staff)">mdi-dots-vertical</v-icon>
     </v-row>
-    <AddNew
-      @add-new="
-        staff = {};
-        namesDialog = true;
-      "
-    />
+    <AddNew @add-new="namesDialog = true" />
     <v-dialog max-width="500px" v-model="namesDialog">
       <v-card>
         <CardTitle
@@ -178,7 +173,6 @@
                   staffOptionsDialog = true;
                   deleteDialog = false;
                 "
-                class="pr-3"
                 >mdi-arrow-left</v-icon
               >
             </v-col>
@@ -262,7 +256,7 @@ export default {
         });
     },
     addMember() {
-      StaffDataService.create()
+      StaffDataService.create(this.staff)
         .then(() => {
           this.avatarDialog = false;
           this.getOffice();
@@ -274,7 +268,7 @@ export default {
     editMember({ id }) {
       StaffDataService.get(id)
         .then((response) => {
-          this.staff = response.data;
+          this.staff = JSON.parse(JSON.stringify(response.data));
           this.staffOptionsDialog = true;
         })
         .catch((e) => {
