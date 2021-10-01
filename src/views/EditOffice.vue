@@ -23,7 +23,7 @@ export default {
     };
   },
   mounted() {
-      this.getOffice();
+    this.getOffice();
   },
   methods: {
     getOffice() {
@@ -37,7 +37,7 @@ export default {
         });
     },
     editOffice(id, office) {
-        OfficeDataService.update(id, office)
+      OfficeDataService.update(id, office)
         .then(() => {
           this.$router.push({ name: "offices" });
         })
@@ -46,7 +46,7 @@ export default {
         });
     },
     deleteOffice(id) {
-        OfficeDataService.delete(id)
+      OfficeDataService.delete(id)
         .then(() => {
           this.$router.push({ name: "offices" });
         })

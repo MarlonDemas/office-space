@@ -1,7 +1,7 @@
 <template>
   <specno-card-wrapper :color="office.color">
     <template>
-      <OfficeDetail :office="office" :clickable="clickable" />
+      <OfficeDetail :office="office" />
     </template>
   </specno-card-wrapper>
 </template>
@@ -15,10 +15,6 @@ export default {
       type: Object,
       required: true,
     },
-    clickable: {
-      type: Boolean,
-      default: false
-    }
   },
   components: {
     SpecnoCardWrapper,
@@ -26,6 +22,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

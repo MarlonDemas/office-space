@@ -2,9 +2,15 @@
   <div class="offices__wrapper">
     <p class="headline">All Offices</p>
     <div class="office__card" v-for="office in offices" :key="office.id">
-      <SpecnoOfficeCard :office="office" clickable />
+      <SpecnoOfficeCard
+        @click.native="
+          $router.push({ name: 'office-details', params: { id: office.id } })
+        "
+        :office="office"
+        style="cursor: pointer"
+      />
     </div>
-    <AddNew @add-new="$router.push({name: 'new-office'})" />
+    <AddNew @add-new="$router.push({ name: 'new-office' })" />
   </div>
 </template>
 
@@ -39,9 +45,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.office__btn {
-  bottom: 17px;
-}
-</style>

@@ -42,10 +42,21 @@
       }"
     ></v-swatches>
     <div class="update__buttons" v-if="edit">
-        <SubmitButton title="Update Office" @submitClicked="$emit('edit-office', office.id, office)" />
-        <SubmitButton title="Delete Office" text @submitClicked="$emit('delete-office', office.id)" />
+      <SpecnoButton
+        title="Update Office"
+        @button-clicked="$emit('edit-office', office.id, office)"
+      />
+      <SpecnoButton
+        title="Delete Office"
+        text
+        @button-clicked="$emit('delete-office', office.id)"
+      />
     </div>
-    <SubmitButton v-else title="Add Office" @submitClicked="$emit('add-office', office)" />
+    <SpecnoButton
+      v-else
+      title="Add Office"
+      @button-clicked="$emit('add-office', office)"
+    />
   </form>
 </template>
 
@@ -53,7 +64,7 @@
 import VSwatches from "vue-swatches";
 
 import "vue-swatches/dist/vue-swatches.css";
-import SubmitButton from './SubmitButton';
+import SpecnoButton from "./SpecnoButton";
 export default {
   props: {
     office: {
@@ -65,7 +76,7 @@ export default {
       default: false,
     },
   },
-  components: { VSwatches, SubmitButton },
+  components: { VSwatches, SpecnoButton },
   data() {
     return {
       swatches: [
