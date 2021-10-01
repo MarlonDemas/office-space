@@ -27,118 +27,21 @@
       </v-col>
       <v-icon @click="editMember(staff)">mdi-dots-vertical</v-icon>
     </v-row>
-    <AddNew @add-new="namesDialog = true" />
-    <v-dialog max-width="500px" v-model="namesDialog">
-      <v-card>
-        <CardTitle
-          :title="title"
-          icon="mdi-close-circle-outline"
-          @icon-clicked="namesDialog = false"
-        />
-        <v-card-text>
-          <v-text-field
-            solo
-            label="First Name"
-            flat
-            v-model="staff.firstname"
-          ></v-text-field>
-          <v-text-field
-            solo
-            label="Last Name"
-            flat
-            v-model="staff.lastname"
-          ></v-text-field>
-          <v-container>
-            <v-col>
-              <v-row justify="space-around">
-                <div class="dialog__icons">
-                  <v-icon class="mr-1" color="specno-blue" size="8"
-                    >mdi-checkbox-blank-circle</v-icon
-                  >
-                  <v-icon color="specno-blue" size="8"
-                    >mdi-checkbox-blank-circle-outline</v-icon
-                  >
-                </div>
-              </v-row>
-            </v-col>
-          </v-container>
-          <v-container>
-            <SpecnoButton
-              block
-              title="Next"
-              @button-clicked="
-                namesDialog = false;
-                avatarDialog = true;
-              "
-            />
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-dialog max-width="500px" v-model="avatarDialog">
-      <v-card>
-        <card-title
-          :title="title"
-          icon="mdi-close-circle-outline"
-          @icon-clicked="avatarDialog = false"
-        >
-          <template>
-            <v-icon
-              @click="
-                namesDialog = true;
-                avatarDialog = false;
-              "
-              class="pr-3"
-              >mdi-arrow-left</v-icon
-            >
-          </template>
-        </card-title>
-        <v-card-text>
-          <p class="text-h5 font-weight-medium black--text">Avatar</p>
-          <v-layout row wrap v-if="avatars" justify-space-around>
-            <v-flex v-for="avatar in avatars" :key="avatar.id">
-              <v-card tile flat class="d-flex justify-center">
-                <v-card-text class="d-flex justify-center">
-                  <v-avatar
-                    size="48"
-                    @click="staff.avatar = avatar.path"
-                    :class="{ active: avatar.path === staff.avatar }"
-                  >
-                    <img :src="require(`@/assets/avatars/${avatar.path}`)" />
-                  </v-avatar>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
-          <v-container>
-            <v-col>
-              <v-row justify="space-around">
-                <div class="dialog__icons">
-                  <v-icon color="specno-blue" size="8"
-                    >mdi-checkbox-blank-circle-outline</v-icon
-                  >
-                  <v-icon class="mr-1" color="specno-blue" size="8"
-                    >mdi-checkbox-blank-circle</v-icon
-                  >
-                </div>
-              </v-row>
-            </v-col>
-          </v-container>
-          <SpecnoButton
-            v-if="!staff.id"
-            block
-            title="Add Staff Member"
-            @button-clicked="addMember()"
-          />
-          <SpecnoButton
-            v-else
-            block
-            title="Update Staff Member"
-            @button-clicked="updateMember()"
-          />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <AddNew
+      @add-new="
+        newMember = true;
+        $refs.addEditStaffDialog.namesDialog = true;
+      "
+    />
+    <AddEditStaffDialog
+      ref="addEditStaffDialog"
+      :staff="newMember ? newStaffMember : staff"
+      :title="newMember ? 'Add Staff Member' : 'Edit Staff Member'"
+      :buttonTitle="newMember ? 'Update Staff Member' : 'Add Staff Member'"
+      :emitText="newMember ? 'add-member' : 'update-member'"
+      @add-member="addMember()"
+      @update-member="updateMember()"
+    />
     <v-dialog max-width="500px" v-model="staffOptionsDialog">
       <v-card>
         <v-card-title></v-card-title>
@@ -147,7 +50,7 @@
             block
             title="Edit Staff Member"
             @button-clicked="
-              namesDialog = true;
+              $refs.addEditStaffDialog.namesDialog = true;
               staffOptionsDialog = false;
             "
           />
@@ -200,48 +103,33 @@
 import PageTitle from "@/components/PageTitle";
 import SpecnoOfficeCard from "@/components/SpecnoOfficeCard";
 import AddNew from "@/components/AddNew";
-import CardTitle from "@/components/CardTitle";
 import SpecnoButton from "@/components/SpecnoButton";
 
 import OfficeDataService from "@/services/OfficeDataService";
 import StaffDataService from "@/services/StaffDataService";
+import AddEditStaffDialog from "../components/AddEditStaffDialog.vue";
 export default {
   components: {
     PageTitle,
     SpecnoOfficeCard,
     AddNew,
-    CardTitle,
+    AddEditStaffDialog,
     SpecnoButton,
-  },
-  computed: {
-    title() {
-      const type = this.staff.id ? "Edit" : "New";
-      return `${type} Staff Member`;
-    },
   },
   data() {
     return {
-      avatars: {},
       office: {
         staffs: [],
       },
       staff: {},
-      namesDialog: false,
-      avatarDialog: false,
+      newStaffMember: {},
+      newMember: false,
       staffOptionsDialog: false,
       deleteDialog: false,
     };
   },
   mounted() {
     this.getOffice();
-    let files = require.context("@/assets/avatars", true, /\.svg$/);
-    files.keys().map((key) => {
-      let id = key.split("/").pop().split(".")[0].toUpperCase();
-      this.avatars[id] = {
-        path: key.split("/").pop(),
-        id: id,
-      };
-    });
   },
   methods: {
     getOffice() {
@@ -249,16 +137,17 @@ export default {
       OfficeDataService.get(id)
         .then((response) => {
           this.office = response.data;
-          this.staff.officeId = this.office.id;
         })
         .catch((e) => {
           console.error(e);
         });
     },
     addMember() {
-      StaffDataService.create(this.staff)
+      this.newStaffMember.officeId = this.office.id;
+      StaffDataService.create(this.newStaffMember)
         .then(() => {
-          this.avatarDialog = false;
+          this.$refs.addEditStaffDialog.avatarDialog = false;
+          this.newStaffMember = {};
           this.getOffice();
         })
         .catch((e) => {
@@ -266,9 +155,10 @@ export default {
         });
     },
     editMember({ id }) {
+      this.newMember = false;
       StaffDataService.get(id)
         .then((response) => {
-          this.staff = JSON.parse(JSON.stringify(response.data));
+          this.staff = response.data;
           this.staffOptionsDialog = true;
         })
         .catch((e) => {
@@ -278,7 +168,7 @@ export default {
     updateMember() {
       StaffDataService.update(this.staff.id, this.staff)
         .then(() => {
-          this.avatarDialog = false;
+          this.$refs.addEditStaffDialog.avatarDialog = false;
           this.getOffice();
         })
         .catch((e) => {
