@@ -38,7 +38,7 @@
       ref="addEditStaffDialog"
       :staff="newMember ? newStaffMember : staff"
       :title="newMember ? 'Add Staff Member' : 'Edit Staff Member'"
-      :buttonTitle="newMember ? 'Update Staff Member' : 'Add Staff Member'"
+      :buttonTitle="newMember ? 'Add Staff Member' : 'Update Staff Member'"
       :emitText="newMember ? 'add-member' : 'update-member'"
       @add-member="addMember()"
       @update-member="updateMember()"
