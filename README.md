@@ -36,7 +36,7 @@ git clone https://github.com/MarlonDemas/office-space
 
 ### Live Link
 I have also included a hosted live link below:
-https://offices.marlondemas.co.za
+https://specno-offices.netlify.app
 
 
 ## Built With
